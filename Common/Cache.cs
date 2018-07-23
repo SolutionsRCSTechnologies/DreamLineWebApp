@@ -6,7 +6,8 @@ using System.Threading.Tasks;
 
 namespace Common
 {
-    public class Class1
+    public class Cache
     {
+
     }
 }
