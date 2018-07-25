@@ -60,7 +60,7 @@ namespace Logger
             return builder.ToString();
         }
 
-        public Logger GetInstance()
+        public static Logger GetInstance()
         {
             if (log == null)
             {
