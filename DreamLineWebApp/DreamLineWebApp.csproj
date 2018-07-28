@@ -199,12 +199,14 @@
     <Compile Include="Controllers\DashBoardController.cs" />
     <Compile Include="Controllers\HomeController.cs" />
     <Compile Include="Controllers\ManageController.cs" />
+    <Compile Include="Controllers\SharedController.cs" />
     <Compile Include="Global.asax.cs">
       <DependentUpon>Global.asax</DependentUpon>
     </Compile>
     <Compile Include="Helpers\DashBoardHelper.cs" />
     <Compile Include="Helpers\GalleryHelper.cs" />
     <Compile Include="Helpers\ProductHelper.cs" />
+    <Compile Include="Helpers\SearchHelper.cs" />
     <Compile Include="Helpers\ServiceHelper.cs" />
     <Compile Include="Models\AccountViewModels.cs" />
     <Compile Include="Models\DashBoard.cs" />
@@ -213,6 +215,7 @@
     <Compile Include="Models\ManageViewModels.cs" />
     <Compile Include="Models\Products.cs" />
     <Compile Include="Models\Service.cs" />
+    <Compile Include="Models\SharedEntities.cs" />
     <Compile Include="Models\Student.cs" />
     <Compile Include="Properties\AssemblyInfo.cs" />
     <Compile Include="Startup.cs" />
@@ -277,6 +280,8 @@
     <Content Include="Views\Manage\VerifyPhoneNumber.cshtml" />
     <Content Include="Views\Shared\Lockout.cshtml" />
     <Content Include="Views\Shared\_LoginPartial.cshtml" />
+    <Content Include="Views\Shared\_DreamLine.cshtml" />
+    <Content Include="Views\Shared\Search.cshtml" />
   </ItemGroup>
   <ItemGroup>
     <Folder Include="App_Data\" />

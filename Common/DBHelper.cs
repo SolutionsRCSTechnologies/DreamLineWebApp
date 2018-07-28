@@ -17,13 +17,24 @@ namespace Common
         public Dictionary<string, object> GetCacheItems()
         {
             Dictionary<string, object> dicObj = new Dictionary<string, object>();
+            string colKey = string.Empty, colVal = string.Empty, colActive = string.Empty, commandStr = string.Empty;
+             DataTable sourceTab = null;
             try
             {
-                string commandStr = @"SELECT * FROM ACD_APPLICATION_CONFIGURATION_TABLE";
-                DataTable sourceTab = Execute(commandStr);
-                if (sourceTab != null && sourceTab.HasErrors)
+                commandStr = @"SELECT * FROM ACD_APPLICATION_CONFIGURATION_TABLE WHERE ACTIVE_FLAG = 'Y'";
+                sourceTab = Execute(commandStr);
+                if (sourceTab != null && sourceTab.Rows!=null && sourceTab.Rows.Count > 0)
                 {
-                    dicObj = GetListFromTable(sourceTab);
+                    colActive = "ACTIVE_FLAG";colKey = "CONFIG_KEY"; colVal = "CONFIG_VALUE";
+                    dicObj = GetListFromTable(sourceTab, colKey, colVal, colActive, ref dicObj);
+                }
+                sourceTab = null;
+                commandStr = @"SELECT * FROM ACD_APPLICATION_CONTENTS_TABLE WHERE ACTIVE_FLAG = 'Y'";
+                sourceTab = Execute(commandStr);
+                if (sourceTab != null && sourceTab.Rows != null && sourceTab.Rows.Count > 0)
+                {
+                    colActive = "ACTIVE_FLAG"; colKey = "CONTENT_KEY"; colVal = "CONTENT_VALUE";
+                    dicObj = GetListFromTable(sourceTab, colKey, colVal, colActive, ref dicObj);
                 }
             }
             catch (Exception ex)
@@ -33,21 +44,25 @@ namespace Common
             return dicObj;
         }
 
-        private Dictionary<string, object> GetListFromTable(DataTable sTab)
+        private Dictionary<string, object> GetListFromTable(DataTable sTab, string colKey, string colVal, string colActive, ref Dictionary<string, object> obj)
         {
-            Dictionary<string, object> obj = new Dictionary<string, object>();
+            obj = obj ?? new Dictionary<string, object>();
             if (sTab != null && sTab.HasErrors)
             {
                 foreach (DataRow dr in sTab.Rows)
                 {
                     if (dr != null)
                     {
-                        if (dr["ACTIVE_FLAG"] != null && Convert.ToString(dr["ACTIVE_FLAG"]) == "Y")
+                        if (dr[colActive] != null && Convert.ToString(dr[colActive]) == "Y")
                         {
-                            string key = dr["CONFIG_KEY"] != null && !string.IsNullOrEmpty(Convert.ToString(dr["CONFIG_KEY"])) ? Convert.ToString(dr["CONFIG_KEY"]) : string.Empty;
+                            string key = dr[colKey] != null && !string.IsNullOrEmpty(Convert.ToString(dr[colKey])) ? Convert.ToString(dr[colKey]) : string.Empty;
                             if (!string.IsNullOrEmpty(key) && !obj.ContainsKey(key))
                             {
-                                obj.Add(key, (dr["CONFIG_VALUE"] != null ? dr["CONFIG_VALUE"] : null));
+                                object item = dr[colVal] != null ? dr[colVal] : null;
+                                if (item != null)
+                                {
+                                    obj.Add(key, item);
+                                }
                             }
                         }
                     }

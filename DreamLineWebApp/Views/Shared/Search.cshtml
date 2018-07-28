@@ -1,0 +1,23 @@
+﻿@using DreamLineWebApp.Models
+
+@model WebSearch
+@Html.AntiForgeryToken()
+<div>
+    <div class="nav navbar-nav navbar-right">
+        @*<ul>
+            @foreach (string item in Model.ContentTypes)
+            {
+                <li>
+                    @Html.DisplayText(item)
+            </li>
+            }
+        </ul>*@
+        @Html.DropDownListFor(itm=> itm.ContentType, Model.ContentTypes.Select(i=> new SelectListItem(){ Text = i, Value=i, Selected = i == Model.ContentType}).ToList())
+        </div>
+    <div class="nav navbar-nav navbar-right">
+        @Html.TextBoxFor(m=> m.SearchText)
+    </div>
+    <div class="nav navbar-nav navbar-right">
+        @*@Html.ActionLink()*@
+    </div>
+</div>
