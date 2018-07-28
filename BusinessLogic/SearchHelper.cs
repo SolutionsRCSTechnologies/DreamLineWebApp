@@ -1,20 +1,20 @@
 ﻿using System;
 using System.Collections.Generic;
-using System.Data;
 using System.Linq;
 using System.Reflection;
 using System.Text;
 using System.Threading.Tasks;
+using nENTITIES = Entities;
 using nLOGGER = Logger;
 
-namespace DataAccess
+namespace BusinessLogic
 {
-    public class DBHelper
+    public class SearchHelper
     {
-        private nLOGGER.Logger log = nLOGGER.Logger.GetInstance();
-        public DataTable GetResultSet(string cmdStr)
+        public static nLOGGER.Logger log = nLOGGER.Logger.GetInstance();
+        public nENTITIES.SearchResults GetSearchResult(nENTITIES.WebSearch searchObj)
         {
-            DataTable retTab = null;
+            nENTITIES.SearchResults result = new nENTITIES.SearchResults();
             try
             {
                 log.Debug("Entering " + MethodBase.GetCurrentMethod().Name, MethodBase.GetCurrentMethod().Name);
@@ -25,7 +25,7 @@ namespace DataAccess
             {
                 log.Error(ex.Message, MethodBase.GetCurrentMethod().Name);
             }
-            return retTab;
+            return result;
         }
     }
 }
